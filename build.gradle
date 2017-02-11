@@ -10,15 +10,22 @@ repositories {
 }
 
 dependencies {
+    compile project(':controller')
     compile project(':entity')
+    compile project(':persistence')
     compile project(':persistence_adapter')
     compile project(':usecase')
+    compile 'org.springframework:spring-context:4.3.6.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-allprojects {
+subprojects {
     group 'br.com.cepservice'
     version '1.0'
     apply plugin: 'java'
     sourceCompatibility = 1.8
+
+    dependencies {
+        compile 'org.springframework:spring-context:4.3.6.RELEASE'
+    }
 }

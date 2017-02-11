@@ -1,60 +1,56 @@
 package br.com.cepservice;
 
+import br.com.cepservice.model.exception.CEPNotFoundException;
+import br.com.cepservice.model.exception.InvalidCEPException;
 import br.com.cepservice.model.Address;
 import br.com.cepservice.model.CepInput;
-import br.com.cepservice.model.AddressOutput;
 import org.junit.Test;
 
 import java.util.Optional;
 
 public class FindAddressUsecaseTest {
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNullCep() {
+    @Test(expected = InvalidCEPException.class)
+    public void testNullCep() throws InvalidCEPException, CEPNotFoundException {
         FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(""));
         findAddress.execute(null);
     }
 
-    @Test
-    public void testInvalidCep() {
+    @Test(expected = InvalidCEPException.class)
+    public void testInvalidCep() throws InvalidCEPException, CEPNotFoundException {
         CepInput cepInput = new CepInput("12678");
-        FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(cepInput.getValue()));
-        AddressOutput cepOutput = findAddress.execute(cepInput);
-        assert "invalid".equals(cepOutput.getMessage());
+        FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(cepInput.getCep()));
+        findAddress.execute(cepInput);
     }
 
     @Test
-    public void testValidAndPersistedCepWithSeparators() {
+    public void testValidAndPersistedCepWithSeparators() throws InvalidCEPException, CEPNotFoundException {
         CepInput cepInput = new CepInput("12.345-678");
-        FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(cepInput.getValue()));
-        AddressOutput cepOutput = findAddress.execute(cepInput);
-        assert cepInput.getValue().equals(cepOutput.getAddress().getCep());
-        assert "success".equals(cepOutput.getMessage());
+        FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(cepInput.getCep()));
+        Address account = findAddress.execute(cepInput);
+        assert cepInput.getCep().equals(account.getCep());
     }
 
     @Test
-    public void testValidAndPersistedCepWithoutSeparators() {
+    public void testValidAndPersistedCepWithoutSeparators() throws InvalidCEPException, CEPNotFoundException {
         CepInput cepInput = new CepInput("12345674");
-        FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(cepInput.getValue()));
-        AddressOutput cepOutput = findAddress.execute(cepInput);
-        assert cepInput.getValue().equals(cepOutput.getAddress().getCep());
-        assert "success".equals(cepOutput.getMessage());
+        FindAddressUsecase findAddress = new FindAddressUsecase(buildPersistenceAdapter(cepInput.getCep()));
+        Address account = findAddress.execute(cepInput);
+        assert cepInput.getCep().equals(account.getCep());
     }
 
-    @Test
-    public void testValidButNotPersistedCep() {
+    @Test(expected = CEPNotFoundException.class)
+    public void testValidButNotPersistedCep() throws InvalidCEPException, CEPNotFoundException {
         CepInput cepInput = new CepInput("12.345-678");
         FindAddressUsecase findAddress = new FindAddressUsecase(buildNotFoundPersistenceAdapter());
-        AddressOutput cepOutput = findAddress.execute(cepInput);
-        assert null == cepOutput.getAddress();
-        assert "not found".equals(cepOutput.getMessage());
+        findAddress.execute(cepInput);
     }
 
-    private PersistenceAdapter buildNotFoundPersistenceAdapter() {
+    private AddressRepositoryAdapter buildNotFoundPersistenceAdapter() {
         return cep1 -> Optional.empty();
     }
 
-    private PersistenceAdapter buildPersistenceAdapter(String cep) {
+    private AddressRepositoryAdapter buildPersistenceAdapter(String cep) {
         return cep1 -> Optional.of(new Address(cep, "street", "neighborhood", "city", "state"));
     }
 }

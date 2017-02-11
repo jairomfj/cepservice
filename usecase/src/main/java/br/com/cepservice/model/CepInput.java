@@ -2,25 +2,29 @@ package br.com.cepservice.model;
 
 public class CepInput {
 
-    private String value;
+    private String cep;
 
-    public CepInput(String value) {
-        this.value = normalizeValue(value);
+    public CepInput(String cep) {
+        this.cep = normalizeValue(cep);
     }
 
-    public String getValue() {
-        return value;
+    public String getCep() {
+        return cep;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public boolean isValid() {
-        return this.value != null && this.value.length() == 8;
+        return this.cep != null && this.cep.length() == 8;
     }
 
     private String normalizeValue(String value) {
         return value.replace("-", "").replace(".", "");
+    }
+
+    public void normalizeValue() {
+        this.cep = this.cep.replace("-", "").replace(".", "");
     }
 }

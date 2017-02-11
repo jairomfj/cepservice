@@ -1,12 +1,20 @@
 package br.com.cepservice;
 
-public class Address {
+public class AddressEntity {
 
     private String cep;
     private String street;
     private String neighborhood;
     private String city;
     private String state;
+
+    public AddressEntity(String cep, String street, String neighborhood, String city, String state) {
+        this.cep = cep;
+        this.street = street;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
+    }
 
     public String getCep() {
         return cep;

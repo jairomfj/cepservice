@@ -1,39 +1,40 @@
 package br.com.cepservice;
 
 
+import br.com.cepservice.model.exception.CEPNotFoundException;
+import br.com.cepservice.model.exception.InvalidCEPException;
 import br.com.cepservice.model.Address;
 import br.com.cepservice.model.CepInput;
-import br.com.cepservice.model.AddressOutput;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class FindAddressUsecase {
 
-    private final PersistenceAdapter persistenceAdapter;
+    private final AddressRepositoryAdapter addressRepositoryAdapter;
 
-    public FindAddressUsecase(PersistenceAdapter persistenceAdapter) {
-        this.persistenceAdapter = persistenceAdapter;
+    @Autowired
+    public FindAddressUsecase(AddressRepositoryAdapter addressRepositoryAdapter) {
+        this.addressRepositoryAdapter = addressRepositoryAdapter;
     }
 
-    public AddressOutput execute(CepInput cepInput) {
-        if(cepInput == null) {
-            throw new IllegalArgumentException("Cep cannot be null");
+    public Address execute(CepInput cepInput) throws InvalidCEPException, CEPNotFoundException {
+        if(cepInput == null || !cepInput.isValid()) {
+            throw new InvalidCEPException("Cep is invalid");
         }
 
-        AddressOutput addressOutput = AddressOutput.buildDefaulInvalid();
-        if(cepInput.isValid()) {
-            addressOutput = AddressOutput.buildDefaulNotFound();
-            Optional<Address> cepOptional = findAddressBy(cepInput.getValue());
-            if(cepOptional.isPresent()) {
-                addressOutput = AddressOutput.buildDefaulSuccess(cepOptional.get());
-            }
+        Optional<Address> addressOptional = findAddressBy(cepInput.getCep());
+        if (addressOptional.isPresent()) {
+            return addressOptional.get();
         }
 
-        return addressOutput;
+        throw new CEPNotFoundException("Could not find cep: " + cepInput.getCep());
     }
 
     private Optional<Address> findAddressBy(String cep) {
-        Optional<Address> cepOptional = this.persistenceAdapter.findAddressByCep(cep);
+        Optional<Address> cepOptional = this.addressRepositoryAdapter.findAddressByCep(cep);
         if (cepOptional.isPresent() || cep.equals("00000000")) {
           return cepOptional;
         }

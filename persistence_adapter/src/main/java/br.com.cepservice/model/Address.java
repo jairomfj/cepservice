@@ -1,5 +1,7 @@
 package br.com.cepservice.model;
 
+import br.com.cepservice.AddressEntity;
+
 public class Address {
 
     private String cep;
@@ -14,6 +16,15 @@ public class Address {
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
+    }
+
+    public Address(AddressEntity addressEntity) {
+        this.cep = addressEntity.getCep();
+        this.street = addressEntity.getStreet();
+        this.neighborhood = addressEntity.getNeighborhood();
+        this.city = addressEntity.getCity();
+        this.state = addressEntity.getState();
+
     }
 
     public String getCep() {

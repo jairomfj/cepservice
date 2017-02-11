@@ -4,6 +4,6 @@ import br.com.cepservice.model.Address;
 
 import java.util.Optional;
 
-public interface PersistenceAdapter {
+public interface AddressRepositoryAdapter {
     Optional<Address> findAddressByCep(String cep);
 }
