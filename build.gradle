@@ -3,7 +3,7 @@ version '1.0'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -14,4 +14,11 @@ dependencies {
     compile project(':persistence_adapter')
     compile project(':usecase')
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+allprojects {
+    group 'br.com.cepservice'
+    version '1.0'
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
 }
