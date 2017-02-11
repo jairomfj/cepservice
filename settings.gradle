@@ -1,0 +1,6 @@
+rootProject.name = 'cepservice'
+include 'usecase'
+include 'entity'
+include 'persistence-adapter'
+include 'persistence_adapter'
+
