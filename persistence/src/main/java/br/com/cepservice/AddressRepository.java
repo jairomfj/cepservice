@@ -1,5 +1,6 @@
 package br.com.cepservice;
 
+import br.com.cepservice.builder.AddressBuilder;
 import br.com.cepservice.model.Address;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,6 @@ public class AddressRepository implements AddressRepositoryAdapter {
         return addressList.stream()
                 .filter((AddressEntity addressEntity) -> addressEntity.getCep().equals(cep))
                 .findFirst()
-                .map(Address::new);
+                .map(AddressBuilder::build);
     }
 }
