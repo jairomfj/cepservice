@@ -19,7 +19,7 @@ public class EndpointRegister {
     }
 
     public void execute() {
-        port(8080);
+        port(8081);
         registerEndpoints();
     }
 

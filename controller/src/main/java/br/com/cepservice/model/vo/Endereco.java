@@ -6,14 +6,14 @@ public class Endereco {
 
     private String cep;
     private String rua;
-    private String bairo;
+    private String bairro;
     private String cidade;
     private String estado;
 
     public Endereco(Address address) {
         this.cep = address.getCep();
         this.rua = address.getStreet();
-        this.bairo = address.getNeighborhood();
+        this.bairro = address.getNeighborhood();
         this.cidade = address.getCity();
         this.estado = address.getState();
     }
@@ -34,12 +34,12 @@ public class Endereco {
         this.rua = rua;
     }
 
-    public String getBairo() {
-        return bairo;
+    public String getBairro() {
+        return bairro;
     }
 
-    public void setBairo(String bairo) {
-        this.bairo = bairo;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
     public String getCidade() {
