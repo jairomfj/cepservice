@@ -2,6 +2,7 @@ group 'br.com.cepservice'
 version '1.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
@@ -20,7 +21,6 @@ dependencies {
 }
 
 subprojects {
-    group 'br.com.cepservice'
     version '1.0'
     apply plugin: 'java'
     sourceCompatibility = 1.8
@@ -29,3 +29,5 @@ subprojects {
         compile 'org.springframework:spring-context:4.3.6.RELEASE'
     }
 }
+
+mainClassName = "br.com.cepservice.Initializer"
