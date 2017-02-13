@@ -7,6 +7,8 @@ import br.com.cepservice.model.CepInput;
 import br.com.cepservice.model.exception.CEPNotFoundException;
 import br.com.cepservice.model.exception.InvalidCEPException;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -15,6 +17,8 @@ import spark.Route;
 
 @Component
 public class AddressRoute implements Route {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(AddressRoute.class);
 
     private final FindAddressUsecase findAddressUsecase;
 
@@ -31,8 +35,12 @@ public class AddressRoute implements Route {
             Address address = findAddressUsecase.execute(cepInput);
             addressOutput = AddressOutput.buildDefaulSuccess(address);
         } catch (InvalidCEPException | CEPNotFoundException e) {
+            LOGGER.error("Invalid passed data", e);
             addressOutput = AddressOutput.buildDefaulInvalid();
             response.status(400);
+        } catch (Exception e) {
+            LOGGER.error("An error has occurred", e);
+            throw e;
         }
 
         return new Gson().toJson(addressOutput);

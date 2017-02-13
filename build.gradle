@@ -26,6 +26,7 @@ subprojects {
     sourceCompatibility = 1.8
 
     dependencies {
+        compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
         compile 'org.springframework:spring-context:4.3.6.RELEASE'
     }
 }
