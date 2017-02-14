@@ -15,7 +15,7 @@ A aplicação foi desenvolvida baseada no conceito de CLEAN ARCHITECTURE. Garant
 
 ## _Para Rodar a Aplicação_ ##
 
-Via terminal, digite o seguinte comando:
+Via terminal, digite o seguinte comando na pasta raíz do projeto:
 
 ```./gradlew run```
 
