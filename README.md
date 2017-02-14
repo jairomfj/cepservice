@@ -3,7 +3,7 @@
 
 ## _Arquitetura_ ##
 
-Para o design dos projetos, foram usados as seguintes tecnologias:
+Para o design do projeto, foram usados as seguintes tecnologias:
 
 - Spring Framework
 - Java 8
