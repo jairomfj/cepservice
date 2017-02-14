@@ -11,6 +11,7 @@ Para o design dos projetos, foram usados as seguintes tecnologias:
 - Spark Framework
 - JUnit
 
+A aplicação foi desenvolvida baseada no conceito de CLEAN ARCHITECTURE. Garantindo que as camadas que se interagem conheçam apenas a camada interior. Para mais informações acesse: [https://8thlight.com/](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 ## _Para Rodar a Aplicação_ ##
 
