@@ -24,7 +24,7 @@ A aplicação rodará no endereço: ```http://localhost:8081/```
 **Observação:** Não é necessário rodar no tomcat. Ambas as aplicações possuem um embedded server permitindo subir a aplicação e responder em uma determinada porta. 
 
 
-## _Requisiçes_ ##
+## _Requisições_ ##
 
 Para se comunicar com a aplicação, basta fazer um POST para ```http://localhost:8081/cep``` com o seguinte payload:
 ```{"cep":"12345600"}```
